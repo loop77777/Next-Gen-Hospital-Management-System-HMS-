@@ -4,6 +4,9 @@ import com.hospital.model.Patient;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+/**
+ * Thread-safe emergency waiting queue that serves the numerically highest-priority patient first.
+ */
 public class EmergencyPriorityQueue {
     // Min-heap ordering patients by priority level (Critical = 1)
     private final PriorityQueue<Patient> emergencyQueue = new PriorityQueue<>(

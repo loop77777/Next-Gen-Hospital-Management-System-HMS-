@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
+/**
+ * Coordinates patient registration and retrieval using the in-memory patient DAO.
+ */
 public class PatientService {
     private final PatientDAOImpl patientDAO;
     private final AtomicLong idSequence = new AtomicLong(10001);

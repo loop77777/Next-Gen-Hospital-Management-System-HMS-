@@ -3,6 +3,9 @@ package com.hospital.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A patient's diagnoses, prescriptions, and allergies, with support for independent snapshots.
+ */
 public class MedicalRecord implements Cloneable {
     private String recordId;
     private String patientId;
@@ -27,7 +30,7 @@ public class MedicalRecord implements Cloneable {
     public List<String> getDiagnoses() { return diagnoses; }
     public List<String> getPrescriptions() { return prescriptions; }
 
-    // Prototype Pattern implementation for historical record snapshots
+    // Copy each mutable list so changes to a snapshot cannot alter the original record.
     @Override
     public MedicalRecord clone() {
         try {

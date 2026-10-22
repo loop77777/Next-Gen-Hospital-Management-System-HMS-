@@ -2,7 +2,11 @@ package com.hospital.dto;
 
 import com.hospital.model.Gender;
 
-public class PatientDTO<Gender> {
+/**
+ * Carries patient registration data from the application boundary to the service layer.
+ */
+
+public class PatientDTO {
     private String name;
     private int age;
     private Gender gender;

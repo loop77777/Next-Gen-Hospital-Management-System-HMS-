@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Offers a single entry point for patient appointments, consultation billing, and notifications.
+ */
 public class HospitalFacade {
     private final PatientService patientService;
     private final AppointmentDAOImpl appointmentDAO;
@@ -50,7 +53,7 @@ public class HospitalFacade {
     public double processFullConsultationAndBilling(String patientId, Doctor doctor, String testName, double testCost, double pharmacyCost, PaymentStrategy paymentStrategy) {
         Patient patient = patientService.getPatient(patientId);
 
-        // Decorator pattern dynamically aggregates costs
+        // Decorators compose optional lab and pharmacy charges around the base consultation.
         BillableService bill = new BasicConsultation(doctor.calculateConsultationFee());
         if (testName != null && testCost > 0) {
             bill = new LabTestDecorator(bill, testName, testCost);
@@ -62,7 +65,7 @@ public class HospitalFacade {
         double totalAmount = bill.getCost();
         System.out.println("  [BILL GENERATED] Breakdown: " + bill.getDescription() + " | Gross Total: ₹" + totalAmount);
 
-        // Execute Strategy
+        // The selected payment strategy handles the total; a successful payment triggers observers.
         boolean success = paymentStrategy.processPayment(totalAmount);
         if (success) {
             notifyAllObservers("Invoice paid successfully for " + patient.getName() + " | Total: ₹" + totalAmount);
